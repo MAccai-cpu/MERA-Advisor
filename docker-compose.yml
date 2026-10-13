@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: mera_postgres
+    environment:
+      POSTGRES_USER: mera_user
+      POSTGRES_PASSWORD: mera_proyecto
+      POSTGRES_DB: mera_advisor_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+
+  neo4j:
+    image: neo4j:latest
+    container_name: mera_neo4j
+    environment:
+      - NEO4J_AUTH=neo4j/mera_proyecto_neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+
+volumes:
+  pgdata:
+    name: mera-advisor_pgdata
+  neo4j_data:
+    name: mera-advisor_neo4j_data

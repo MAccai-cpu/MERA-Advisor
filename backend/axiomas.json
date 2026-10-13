@@ -1,0 +1,62 @@
+[
+  {
+    "axioma_id": "AX-TR-001",
+    "descripcion": "Priorizar modalidades de transporte exprés o aéreo ante alta urgencia de entrega y plazos críticos.",
+    "dominio": "Transporte",
+    "condicion": "Urgencia alta y tiempo de tránsito crítico menor a 5 días",
+    "consecuencia": "Seleccionar alternativas con menor tiempo de tránsito, descartando transporte marítimo estándar.",
+    "prioridad": 1,
+    "fuente": "Política logística MERA",
+    "version": "1.0",
+    "vigencia": "2026-12-31",
+    "nivel_confianza": 0.95
+  },
+  {
+    "axioma_id": "AX-TR-004",
+    "descripcion": "Asignación obligatoria de unidades con control de temperatura para mercancía perecedera o insumos sensibles.",
+    "dominio": "Transporte",
+    "condicion": "El tipo de mercancía requiere cadena de frío o aislamiento térmico",
+    "consecuencia": "Filtrar la flota habilitando únicamente unidades de transporte refrigeradas.",
+    "prioridad": 1,
+    "fuente": "Marco regulatorio y directrices operativas MERA",
+    "version": "1.0",
+    "vigencia": "2026-12-31",
+    "nivel_confianza": 0.98
+  },
+  {
+    "axioma_id": "AX-COM-001",
+    "descripcion": "Aplicación de esquemas de descuento por volumen para clientes Tier-1 con contratos anuales vigentes.",
+    "dominio": "Comercial",
+    "condicion": "Volumen de operación anual superior al umbral establecido y categoría de cliente Tier-1",
+    "consecuencia": "Ajustar las tarifas comerciales aplicando el porcentaje de bonificación autorizado.",
+    "prioridad": 2,
+    "fuente": "Políticas comerciales de MERA",
+    "version": "1.0",
+    "vigencia": "2026-12-31",
+    "nivel_confianza": 0.90
+  },
+  {
+    "axioma_id": "AX-NOR-001",
+    "descripcion": "Cumplimiento normativo estricto del Complemento Carta Porte del SAT para el tránsito terrestre nacional.",
+    "dominio": "Normatividad",
+    "condicion": "Operación de transporte terrestre dentro del territorio nacional",
+    "consecuencia": "Bloquear la salida de la unidad si la documentación fiscal y digital no está debidamente timbrada.",
+    "prioridad": 1,
+    "fuente": "Disposiciones aduaneras y normatividad oficial",
+    "version": "1.0",
+    "vigencia": "2026-12-31",
+    "nivel_confianza": 1.00
+  },
+  {
+    "axioma_id": "AX-RS-002",
+    "descripcion": "Protocolo de resguardo y seguridad satelital para mercancías de tecnología o alto valor comercial.",
+    "dominio": "Riesgos",
+    "condicion": "Valor de la carga superior al límite de riesgo estándar y clasificación de alta gama",
+    "consecuencia": "Exigir custodia de seguridad y monitoreo GPS activo cada 15 minutos durante toda la ruta.",
+    "prioridad": 1,
+    "fuente": "Matriz de riesgos y seguridad MERA",
+    "version": "1.0",
+    "vigencia": "2026-12-31",
+    "nivel_confianza": 0.97
+  }
+]

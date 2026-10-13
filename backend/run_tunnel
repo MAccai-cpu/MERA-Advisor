@@ -1,0 +1,5 @@
+from pyngrok import ngrok
+
+# Abre un túnel público hacia el puerto 8000
+public_url = ngrok.connect(8000)
+print(f" * URL pública del túnel: {public_url}")

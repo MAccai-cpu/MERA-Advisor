@@ -1,0 +1,171 @@
+[33mcommit 6c2a4019576b7f574f28acb493f06f0cbfd746d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: MAccai-cpu <proyectoccaima@gmail.com>
+Date:   Mon Sep 21 12:41:08 2026 -0600
+
+    feat(backend): implementa API REST modular con FastAPI para MERA Advisor y endpoints por capas
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 6414ef9..226aa0c 100644[m
+Binary files a/.gitignore and b/.gitignore differ
+[1mdiff --git a/backend/comercial.py b/backend/comercial.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..576ce1e[m
+[1m--- /dev/null[m
+[1m+++ b/backend/comercial.py[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mfrom fastapi import APIRouter[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter(prefix="/capa-a", tags=["Capa A - Comercial"])[m
+[32m+[m
+[32m+[m[32m@router.get("/politicas")[m
+[32m+[m[32mdef obtener_politicas_comerciales():[m
+[32m+[m[32m    """Retorna las políticas comerciales y directrices de venta de la Capa A"""[m
+[32m+[m[32m    return {[m
+[32m+[m[32m        "capa": "A - Comercial",[m
+[32m+[m[32m        "descripcion": "Políticas comerciales y directrices de venta de MERA Advisor",[m
+[32m+[m[32m        "politicas": [[m
+[32m+[m[32m            "Optimización de márgenes en cotizaciones de flotas",[m
+[32m+[m[32m            "Validación de descuentos por volumen para clientes frecuentes",[m
+[32m+[m[32m            "Alineación de propuestas con directrices de disponibilidad operativa"[m
+[32m+[m[32m        ][m
+[32m+[m[32m    }[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/experiencia.py b/backend/experiencia.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ee72f87[m
+[1m--- /dev/null[m
+[1m+++ b/backend/experiencia.py[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mfrom fastapi import APIRouter[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter(prefix="/capa-f", tags=["Capa F - Experiencia MERA"])[m
+[32m+[m
+[32m+[m[32m@router.get("/historial")[m
+[32m+[m[32mdef obtener_historial_lecciones():[m
+[32m+[m[32m    """Retorna el historial y lecciones aprendidas de la Capa F"""[m
+[32m+[m[32m    return {[m
+[32m+[m[32m        "capa": "F - Experiencia MERA",[m
+[32m+[m[32m        "descripcion": "Historial, casos de éxito y lecciones aprendidas de MERA Advisor",[m
+[32m+[m[32m        "lecciones": [[m
+[32m+[m[32m            "Análisis de interacciones históricas para mejora continua del motor ANA",[m
+[32m+[m[32m            "Optimización basada en casos de éxito previos con clientes",[m
+[32m+[m[32m            "Evolución de estrategias comerciales a partir de retroalimentación"[m
+[32m+[m[32m        ][m
+[32m+[m[32m    }[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/experienciaMERA.py b/backend/experienciaMERA.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ee72f87[m
+[1m--- /dev/null[m
+[1m+++ b/backend/experienciaMERA.py[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mfrom fastapi import APIRouter[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter(prefix="/capa-f", tags=["Capa F - Experiencia MERA"])[m
+[32m+[m
+[32m+[m[32m@router.get("/historial")[m
+[32m+[m[32mdef obtener_historial_lecciones():[m
+[32m+[m[32m    """Retorna el historial y lecciones aprendidas de la Capa F"""[m
+[32m+[m[32m    return {[m
+[32m+[m[32m        "capa": "F - Experiencia MERA",[m
+[32m+[m[32m        "descripcion": "Historial, casos de éxito y lecciones aprendidas de MERA Advisor",[m
+[32m+[m[32m        "lecciones": [[m
+[32m+[m[32m            "Análisis de interacciones históricas para mejora continua del motor ANA",[m
+[32m+[m[32m            "Optimización basada en casos de éxito previos con clientes",[m
+[32m+[m[32m            "Evolución de estrategias comerciales a partir de retroalimentación"[m
+[32m+[m[32m        ][m
+[32m+[m[32m    }[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/main.py b/backend/main.py[m
+[1mindex 80a0bd0..bab1062 100644[m
+[1m--- a/backend/main.py[m
+[1m+++ b/backend/main.py[m
+[36m@@ -1,12 +1,26 @@[m
+ from fastapi import FastAPI[m
+ from sqlalchemy import text[m
+ from backend.database import engine[m
+[32m+[m[32mfrom backend.comercial import router as comercial_router[m
+[32m+[m[32mfrom backend.transporte import router as transporte_router[m
+[32m+[m[32mfrom backend.operacion import router as operacion_router[m
+[32m+[m[32mfrom backend.riesgos import router as riesgos_router[m
+[32m+[m[32mfrom backend.normatividad import router as normatividad_router[m
+[32m+[m[32mfrom backend.experiencia import router as experiencia_router[m
+ [m
+ app = FastAPI([m
+     title="MERA Advisor - Motor Cognitivo ANA",[m
+     version="1.0.0"[m
+ )[m
+ [m
+[32m+[m[32m# Registro de todas las capas cognitivas del motor[m
+[32m+[m[32mapp.include_router(comercial_router)[m
+[32m+[m[32mapp.include_router(transporte_router)[m
+[32m+[m[32mapp.include_router(operacion_router)[m
+[32m+[m[32mapp.include_router(riesgos_router)[m
+[32m+[m[32mapp.include_router(normatividad_router)[m
+[32m+[m[32mapp.include_router(experiencia_router)[m
+[32m+[m
+ @app.get("/")[m
+ def read_root():[m
+     return {"mensaje": "Bienvenido al núcleo de MERA Advisor. Sistema operativo y conectado."}[m
+[1mdiff --git a/backend/normatividad.py b/backend/normatividad.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..657f20c[m
+[1m--- /dev/null[m
+[1m+++ b/backend/normatividad.py[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mfrom fastapi import APIRouter[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter(prefix="/capa-e", tags=["Capa E - Normatividad"])[m
+[32m+[m
+[32m+[m[32m@router.get("/marco")[m
+[32m+[m[32mdef obtener_marco_regulatorio():[m
+[32m+[m[32m    """Retorna el marco regulatorio y normatividad de la Capa E"""[m
+[32m+[m[32m    return {[m
+[32m+[m[32m        "capa": "E - Normatividad",[m
+[32m+[m[32m        "descripcion": "Marco regulatorio y cumplimiento normativo de MERA Advisor",[m
+[32m+[m[32m        "normas": [[m
+[32m+[m[32m            "Cumplimiento de normativas de transporte y vialidad aplicables",[m
+[32m+[m[32m            "Alineación con regulaciones fiscales y comerciales vigentes",[m
+[32m+[m[32m            "Auditoría y control de estándares de calidad corporativa"[m
+[32m+[m[32m        ][m
+[32m+[m[32m    }[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/operacion.py b/backend/operacion.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..49715ae[m
+[1m--- /dev/null[m
+[1m+++ b/backend/operacion.py[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mfrom fastapi import APIRouter[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter(prefix="/capa-c", tags=["Capa C - Operación"])[m
+[32m+[m
+[32m+[m[32m@router.get("/directrices")[m
+[32m+[m[32mdef obtener_directrices_operativas():[m
+[32m+[m[32m    """Retorna las directrices operativas de la Capa C"""[m
+[32m+[m[32m    return {[m
+[32m+[m[32m        "capa": "C - Operación",[m
+[32m+[m[32m        "descripcion": "Directrices operativas y de ejecución de MERA Advisor",[m
+[32m+[m[32m        "directrices": [[m
+[32m+[m[32m            "Supervisión y control de procesos logísticos diarios",[m
+[32m+[m[32m            "Coordinación de tiempos de entrega y asignación de recursos",[m
+[32m+[m[32m            "Mitigación de cuellos de botella en la cadena operativa"[m
+[32m+[m[32m        ][m
+[32m+[m[32m    }[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/riesgos.py b/backend/riesgos.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..49715ae[m
+[1m--- /dev/null[m
+[1m+++ b/backend/riesgos.py[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mfrom fastapi import APIRouter[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter(prefix="/capa-c", tags=["Capa C - Operación"])[m
+[32m+[m
+[32m+[m[32m@router.get("/directrices")[m
+[32m+[m[32mdef obtener_directrices_operativas():[m
+[32m+[m[32m    """Retorna las directrices operativas de la Capa C"""[m
+[32m+[m[32m    return {[m
+[32m+[m[32m        "capa": "C - Operación",[m
+[32m+[m[32m        "descripcion": "Directrices operat
