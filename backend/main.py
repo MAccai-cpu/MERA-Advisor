@@ -1,17 +1,17 @@
 from fastapi import FastAPI
 from sqlalchemy import text
-from .database import engine, Base
-from . import models 
+from backend.database import engine, Base
+from backend import models 
 
-from .comercial import router as comercial_router
-from .transporte import router as transporte_router
-from .operacion import router as operacion_router
-from .riesgos import router as riesgos_router
-from .normatividad import router as normatividad_router
-from .experiencia import router as experiencia_router
-from .grafo import router as grafo_router
-from .vector_router import router as vector_router  # Router de pgvector
-from .engine_router import router as engine_router  # Router del Motor de Razonamiento ANA
+from backend.comercial import router as comercial_router
+from backend.transporte import router as transporte_router
+from backend.operacion import router as operacion_router
+from backend.riesgos import router as riesgos_router
+from backend.normatividad import router as normatividad_router
+from backend.experiencia import router as experiencia_router
+from backend.grafo import router as grafo_router
+from backend.vector_router import router as vector_router  # Router de pgvector
+from backend.engine_router import router as engine_router  # Router del Motor de Razonamiento ANA
 
 app = FastAPI(
     title="MERA Advisor - Motor Cognitivo ANA",
@@ -51,4 +51,5 @@ def test_db_connection():
         return {
             "estado": "Error de conexión",
             "detalles": str(e)
+        }
         }
