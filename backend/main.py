@@ -52,4 +52,4 @@ def test_db_connection():
             "estado": "Error de conexión",
             "detalles": str(e)
         }
-        }
+        
